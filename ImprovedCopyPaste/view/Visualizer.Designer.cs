@@ -73,6 +73,7 @@
             this.Controls.Add(this.lbl1);
             this.Name = "Visualizer";
             this.Text = "Visualizer";
+            this.Load += new System.EventHandler(this.Visualizer_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Visualizer_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

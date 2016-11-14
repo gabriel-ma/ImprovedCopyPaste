@@ -1,20 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using ImprovedCopyPaste.auxi;
 namespace ImprovedCopyPaste.view
 {
     public partial class Visualizer : Form
     {
+        KeyboardHook hook = new KeyboardHook();
+        int i = 0;
         public Visualizer()
         {
             InitializeComponent();
+
+            // register the event that is fired after the key press.
+            hook.KeyPressed +=
+                new EventHandler<KeyPressedEventArgs>(hook_KeyPressed);
+            // register the control + alt + F12 combination as hot key.
+            hook.RegisterHotKey(auxi.ModifierKeys.Control, Keys.F12);
+            
+
+        }
+
+        void hook_KeyPressed(object sender, KeyPressedEventArgs e)
+        {
+            // show the keys pressed in a label.
+            if (this.Visible)
+                Hide();
+            else {
+                i++;
+                getCopy();
+
+                if (i == 3) {
+                    Show();
+                }
+            }
+         
         }
 
         private void getCopy() {
@@ -54,5 +73,11 @@ namespace ImprovedCopyPaste.view
         {
             Clipboard.SetText(lbl3.Text);
         }
+
+        private void Visualizer_Load(object sender, EventArgs e)
+        {
+            Hide();
+        }
     }
+
 }
